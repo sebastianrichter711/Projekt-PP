@@ -1,8 +1,8 @@
-package pl.polsl.pp.backapp;
+package pl.polsl.pp.backapp.user;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends MongoRepository<Users,String> {
+public interface UserRepository extends MongoRepository<User,String> {
 }

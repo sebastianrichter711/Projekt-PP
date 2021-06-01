@@ -1,11 +1,11 @@
-package pl.polsl.pp.backapp;
+package pl.polsl.pp.backapp.db;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import pl.polsl.pp.backapp.user.UserRepository;
+import pl.polsl.pp.backapp.user.User;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
@@ -17,11 +17,11 @@ public class DbSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Users kowalski = new Users("weee@wp.pl", "janek", "janek", "user",
+        User kowalski = new User("weee@wp.pl", "janek", "janek", "user",
                 "active", 0, new Date(), new Date());
-        Users nowak = new Users("wefddfee@wp.pl", "karolnowak", "kanowak", "admin",
+        User nowak = new User("wefddfee@wp.pl", "karolnowak", "kanowak", "admin",
                 "active", 0, new Date(), new Date());
-        Users wisnia = new Users("wisnia123@onet.pl", "michalwisnia", "michalwisnia", "user",
+        User wisnia = new User("wisnia123@onet.pl", "michalwisnia", "michalwisnia", "user",
                 "active", 0, new Date(), new Date());
 
 

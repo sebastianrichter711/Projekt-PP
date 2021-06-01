@@ -1,24 +1,26 @@
-package pl.polsl.pp.backapp;
+package pl.polsl.pp.backapp.topic;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pl.polsl.pp.backapp.post.Post;
+import pl.polsl.pp.backapp.user.User;
 
 import java.util.Date;
 import java.util.List;
 
 @Document(collection="topics")
-public class Topics {
+public class Topic {
 
     @Id
     private String id;
     private String title;
-    private Users author;
+    private User author;
     private Date createDate;
     private Date lastChange;
     private String description;
-    private List<Posts> posts;
+    private List<Post> posts;
 
-    public Topics(String title, Users author, Date createDate, Date lastChange, String description, List<Posts> posts){
+    public Topic(String title, User author, Date createDate, Date lastChange, String description, List<Post> posts){
         this.title = title;
         this.author = author;
         this.createDate = createDate;
@@ -29,17 +31,17 @@ public class Topics {
 
     public String getId() {return id;}
     public String getTitle() {return title;}
-    public Users getAuthor() {return author;}
+    public User getAuthor() {return author;}
     public Date getCreateDate() {return createDate;}
     public Date getLastChange() {return lastChange;}
     public String getDescription() {return description;}
-    public List<Posts> getPosts() {return posts;}
+    public List<Post> getPosts() {return posts;}
 
     public void setId(String newId) {id=newId;}
     public void setTitle(String newTitle) {title=newTitle;}
-    public void setAuthor(Users newAuthor) {author=newAuthor;}
+    public void setAuthor(User newAuthor) {author=newAuthor;}
     public void setCreateDate(Date newCreateDate) {createDate = newCreateDate;}
     public void setLastChange(Date newLastChange) {lastChange = newLastChange;}
     public void setDescription(String newDescription) {description = newDescription;}
-    public void getPosts(List<Posts> newPosts) {posts=newPosts;}
+    public void getPosts(List<Post> newPosts) {posts=newPosts;}
 }

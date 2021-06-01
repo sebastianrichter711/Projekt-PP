@@ -1,4 +1,4 @@
-package pl.polsl.pp.backapp;
+package pl.polsl.pp.backapp.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,8 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<Users> getAll(){
-        List<Users> users = this.userRepo.findAll();
+    public List<User> getAll(){
+        List<User> users = this.userRepo.findAll();
 
         return users;
     }

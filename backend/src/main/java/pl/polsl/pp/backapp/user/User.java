@@ -1,4 +1,4 @@
-package pl.polsl.pp.backapp;
+package pl.polsl.pp.backapp.user;
 
 import com.mongodb.lang.Nullable;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document(collection="users")
-public class Users {
+public class User {
 
     @Id
     private String id;
@@ -24,8 +24,8 @@ public class Users {
     @Nullable
     private java.sql.Date endAuthorise;
 
-    public Users(String email, String login, String password, String role, String status, Integer postsNumber, Date dateJoined,
-                 Date lastLogin)
+    public User(String email, String login, String password, String role, String status, Integer postsNumber, Date dateJoined,
+                Date lastLogin)
     {
         this.email=email;
         this.login=login;
