@@ -34,11 +34,7 @@ public class UserService {
         if(!this.validateMail(user.getEmail()))
             throw new IllegalArgumentException("Invalid mail format");
 
-        try {
-            return userRepository.save(user);
-        } catch (RuntimeException e) {
-            throw new ItemExistsInDatabaseException("User of id " + user.getId() + " exists in DB");
-        }
+        return userRepository.save(user);
     }
 
     public User updateUser(String id, User updatedUser) {

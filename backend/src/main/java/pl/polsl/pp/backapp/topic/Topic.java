@@ -1,5 +1,6 @@
 package pl.polsl.pp.backapp.topic;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.polsl.pp.backapp.post.Post;
@@ -18,7 +19,17 @@ public class Topic {
     private Date createDate;
     private Date lastChange;
     private String description;
+
+    @JsonIgnore
     private List<Post> posts;
+
+//    public Topic(String title, User author, Date createDate, Date lastChange, String description){
+//        this.title = title;
+//        this.author = author;
+//        this.createDate = createDate;
+//        this.lastChange = lastChange;
+//        this.description=description;
+//    }
 
     public Topic(String title, User author, Date createDate, Date lastChange, String description, List<Post> posts){
         this.title = title;

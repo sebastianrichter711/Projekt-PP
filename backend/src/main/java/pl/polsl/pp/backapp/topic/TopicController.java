@@ -1,46 +1,54 @@
-package pl.polsl.pp.backapp.user;
+package pl.polsl.pp.backapp.topic;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
 import pl.polsl.pp.backapp.exception.ItemExistsInDatabaseException;
-
-import java.util.List;
+import pl.polsl.pp.backapp.user.User;
+import pl.polsl.pp.backapp.user.UserService;
 
 @RestController
-public class UserController {
+public class TopicController {
 
-    private UserService userService;
+    private TopicService topicService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public TopicController(TopicService topicService) {
+        this.topicService = topicService;
     }
 
-    @GetMapping("/user")
-    public Iterable<User> getUsers(){
-        return userService.getUsers();
+    @GetMapping("/topic")
+    public Iterable<Topic> getTopics(){
+        return topicService.getTopics();
     }
 
-    @GetMapping("/user/{id}")
-    public User getUser(@PathVariable String id) {
+    @GetMapping("/topic/{id}")
+    public Topic getTopic(@PathVariable String id) {
         try {
-            return userService.getUser(id);
+            return topicService.getTopic(id);
         } catch (IdNotFoundInDatabaseException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
-    @PostMapping("/user")
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    @PostMapping("/topic")
+    public Topic addTopic(@RequestBody Topic topic) {
+        try {
+            return topicService.addTopic(topic);
+        } catch (ItemExistsInDatabaseException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+        } catch (RuntimeException  e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
     }
 
-    @PutMapping("/user/{id}")
-    public User updateUser(@PathVariable String id, @RequestBody User user) {
+    @PutMapping("/topic/{id}")
+    public Topic updateTopic(@PathVariable String id, @RequestBody Topic topic) {
         try {
-            return userService.updateUser(id, user);
+            return topicService.updateTopic(id, topic);
         } catch (IdNotFoundInDatabaseException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -56,10 +64,10 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable String id) {
+    @DeleteMapping("/topic/{id}")
+    public void deleteTopic(@PathVariable String id) {
         try {
-            userService.deleteUser(id);
+            topicService.deleteTopic(id);
         } catch (IdNotFoundInDatabaseException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
