@@ -1,5 +1,6 @@
 package pl.polsl.pp.backapp.section;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.polsl.pp.backapp.topic.Topic;
@@ -15,6 +16,8 @@ public class Section {
     private String name;
     private Integer topicsNumber;
     private User moderator;
+
+    @JsonIgnore
     private List<Topic> topics;
 
     private Section(String name, Integer topicsNumber, User moderator, List<Topic> topics){
