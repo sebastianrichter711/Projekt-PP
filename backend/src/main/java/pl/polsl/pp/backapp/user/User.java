@@ -25,8 +25,7 @@ public class User {
     private java.sql.Date endAuthorise;
 
     public User(String email, String login, String password, String role, String status, Integer postsNumber, Date dateJoined,
-                Date lastLogin)
-    {
+                Date lastLogin) {
         this.email=email;
         this.login=login;
         this.password=password;
@@ -36,17 +35,18 @@ public class User {
         this.dateJoined=dateJoined;
         this.lastLogin=lastLogin;
     }
+
     public String getId() { return id; }
     public String getEmail() { return email; }
     public String getLogin() { return login; }
-    public String getPassword(){ return password; }
-    public String getRole(){ return role; }
+    public String getPassword() { return password; }
+    public String getRole() { return role; }
     public String getStatus() { return status; }
-    public Integer getPostsNumber(){ return postsNumber; }
-    public Date getDateJoined(){ return dateJoined; }
-    public Date getLastLogin(){ return lastLogin; }
-    public java.sql.Date getAuthoriseDate(){ return authoriseDate; }
-    public java.sql.Date getEndAuthorise(){ return endAuthorise; }
+    public Integer getPostsNumber() { return postsNumber; }
+    public Date getDateJoined() { return dateJoined; }
+    public Date getLastLogin() { return lastLogin; }
+    public java.sql.Date getAuthoriseDate() { return authoriseDate; }
+    public java.sql.Date getEndAuthorise() { return endAuthorise; }
 
     public void setId(String newId) { id=newId; }
     public void setEmail(String newEmail) { email=newEmail; }
@@ -59,7 +59,5 @@ public class User {
     public void setLastLogin(Date newLastLogin){ lastLogin=newLastLogin; }
     public void setAuthoriseDate(java.sql.Date newAuthoriseDate){ authoriseDate=newAuthoriseDate; }
     public void setEndAuthorise(java.sql.Date newEndAuthorise){ endAuthorise=newEndAuthorise; }
-
-
 
 }
