@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping("/user")
     public User addUser(@RequestBody User user) {
-        return userService.addUser(user);TopicController
+        return userService.addUser(user);
     }
 
     @PutMapping("/user/{id}")
