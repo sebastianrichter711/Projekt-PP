@@ -34,9 +34,11 @@ public class DbSeeder implements CommandLineRunner {
         // password - Janek
         User kowalski = new User("weee@wp.pl", "janek", "$2y$12$AZ4MPx7noGVFkBHRJ29X5Os7bjt50fIqxt86KMdLh4MJCg7h3OhDi", "USER",
                 "active", 0, new Date(), new Date());
-        User nowak = new User("wefddfee@wp.pl", "karolnowak", "kanowak", "ADMIN",
+        // password - kanowak
+        User nowak = new User("wefddfee@wp.pl", "karolnowak", "$2y$12$9dA5sZHTitZPWjDFV5/HdOjkY.fzSvy9LQyd07w5wgnEwTKrLtMSi", "ADMIN",
                 "active", 0, new Date(), new Date());
-        User wisnia = new User("wisnia123@onet.pl", "michalwisnia", "michalwisnia", "USER",
+        // password - michalwisnia
+        User wisnia = new User("wisnia123@onet.pl", "michalwisnia", "$2y$12$lQxZDTOPNkj/CtzQJtnbE.liaOatvaaGtmv1GpQpsWhQPn/3rt6eq", "USER",
                 "active", 0, java.sql.Date.valueOf(LocalDate.now()), java.sql.Date.valueOf(LocalDate.now()));
 
         userRepo.save(kowalski);
