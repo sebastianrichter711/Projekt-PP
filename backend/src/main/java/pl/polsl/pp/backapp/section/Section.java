@@ -20,7 +20,7 @@ public class Section {
     @JsonIgnore
     private List<Topic> topics;
 
-    private Section(String name, Integer topicsNumber, User moderator, List<Topic> topics){
+    public Section(String name, Integer topicsNumber, User moderator, List<Topic> topics){
         this.name = name;
         this.topicsNumber = topicsNumber;
         this.moderator = moderator;

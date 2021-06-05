@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import pl.polsl.pp.backapp.post.Post;
 import pl.polsl.pp.backapp.user.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Topic {
     private String description;
 
     @JsonIgnore
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
 //    public Topic(String title, User author, Date createDate, Date lastChange, String description){
 //        this.title = title;
