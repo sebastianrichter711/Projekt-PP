@@ -10,6 +10,7 @@ import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
 import pl.polsl.pp.backapp.exception.ItemExistsInDatabaseException;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -44,7 +45,7 @@ public class UserService {
 
         // TODO change roles, status to enum maybe
         User user = new User(registerForm.getEmail(), registerForm.getUsername(), hash, "USER",
-                "active", 0, java.sql.Date.valueOf(LocalDate.now()), null);
+                "active", 0, new Date(), null);
 
         try {
             return userRepository.save(user);

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import pl.polsl.pp.backapp.user.User;
 import pl.polsl.pp.backapp.user.UserRepository;
 
-import java.time.LocalDate;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 @Service
 public class UserPrincipalDetailsService implements UserDetailsService {
@@ -21,9 +22,8 @@ public class UserPrincipalDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = this.userRepo.findByLogin(s);
-        user.setLastLogin(java.sql.Date.valueOf(LocalDate.now()));
+        user.setLastLogin(new Date());
         userRepo.save(user);
-
         return new UserPrincipal(user);
     }
 }
