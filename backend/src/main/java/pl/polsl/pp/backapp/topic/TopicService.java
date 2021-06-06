@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
 
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -29,6 +30,7 @@ public class TopicService {
     }
 
     public Topic addTopic(Topic topic) {
+        topic.setCreateDate(new Date());
         return topicRepository.save(topic);
     }
 
@@ -38,6 +40,7 @@ public class TopicService {
         if(topic.isEmpty())
             throw new IdNotFoundInDatabaseException("Topic of id " + id + " not found");
 
+        updatedTopic.setLastChange(new Date());
         return topicRepository.save(updatedTopic);
     }
 

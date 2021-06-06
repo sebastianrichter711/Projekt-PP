@@ -7,6 +7,7 @@ import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
 import pl.polsl.pp.backapp.topic.Topic;
 import pl.polsl.pp.backapp.topic.TopicRepository;
 
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -31,6 +32,7 @@ public class PostService {
     }
 
     public Post addPost(Post post) {
+        post.setCreateDate(new Date());
         return postRepository.save(post);
     }
 
@@ -40,6 +42,7 @@ public class PostService {
         if(post.isEmpty())
             throw new IdNotFoundInDatabaseException("Post of id " + id + " not found");
 
+        updatedPost.setLastChange(new Date());
         return postRepository.save(updatedPost);
     }
 
