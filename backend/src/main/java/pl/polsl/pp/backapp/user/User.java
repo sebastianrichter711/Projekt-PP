@@ -1,5 +1,6 @@
 package pl.polsl.pp.backapp.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mongodb.lang.Nullable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,6 +14,7 @@ public class User {
     private String id;
     private String email;
     private String login;
+    @JsonIgnore
     private String password;
     private String role;
     private String status;

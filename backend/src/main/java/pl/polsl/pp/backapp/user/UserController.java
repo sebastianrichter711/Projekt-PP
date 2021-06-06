@@ -32,10 +32,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user")
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
-    }
+//    @PostMapping("/user")
+//    public User addUser(@RequestBody User user) {
+//        return userService.addUser(user);
+//    }
 
     @PutMapping("/user/{id}")
     public User updateUser(@PathVariable String id, @RequestBody User user) {

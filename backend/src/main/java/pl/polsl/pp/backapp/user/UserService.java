@@ -1,11 +1,15 @@
 package pl.polsl.pp.backapp.user;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import pl.polsl.pp.backapp.auth.RegisterForm;
 import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
 import pl.polsl.pp.backapp.exception.ItemExistsInDatabaseException;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -14,9 +18,11 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Iterable<User> getUsers() {
@@ -30,11 +36,23 @@ public class UserService {
         return user;
     }
 
-    public User addUser(User user) {
-        if(!this.validateMail(user.getEmail()))
+    public User addUser(RegisterForm registerForm) {
+        if(!this.validateMail(registerForm.getEmail()))
             throw new IllegalArgumentException("Invalid mail format");
 
-        return userRepository.save(user);
+        String hash = this.passwordEncoder.encode(registerForm.getPassword());
+
+        // TODO change roles, status to enum maybe
+        User user = new User(registerForm.getEmail(), registerForm.getUsername(), hash, "USER",
+                "active", 0, java.sql.Date.valueOf(LocalDate.now()), null);
+
+        try {
+            return userRepository.save(user);
+        } catch (RuntimeException e) {
+            // TODO make email and username unique
+            throw new ItemExistsInDatabaseException("User with email (" + registerForm.getEmail() + ") or username (" +
+                    registerForm.getUsername() + " exists in DB");
+        }
     }
 
     public User updateUser(String id, User updatedUser) {
