@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import React, { useState } from 'react'
+import Sidebar from './components/sidebar'
+import Sections from './components/sections'
 
 function App() {
+  const PageEnum = Object.freeze({
+    "home": 1,
+    "register": 2,
+    "section": 3,
+    "thread": 4,
+    "add_thread": 5
+  })
+
+  const [page, setPage] = useState(PageEnum.home)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="app">
+      <Sidebar />
+      <div className="container">
+        {        
+          (() => {
+            switch (page) {
+              case PageEnum.home:
+                return <Sections />
+              case PageEnum.register:
+                return
+              case PageEnum.section:
+                return
+              case PageEnum.thread:
+                return
+              case PageEnum.add_thread:
+                return
+            }
+          })()
+        }
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
