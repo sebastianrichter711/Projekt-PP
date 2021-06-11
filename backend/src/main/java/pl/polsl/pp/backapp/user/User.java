@@ -58,9 +58,11 @@ public class User {
     public void setRole(String newRole){ role=newRole; }
     public void setStatus(String newStatus) { status=newStatus; }
     public void setPostsNumber(Integer newPostsNumber){ postsNumber=newPostsNumber; }
+    public void incPostsNumber(){ postsNumber += 1; }
+    public void decPostsNumber() { postsNumber -= 1; }
     public void setDateJoined(Date newDateJoined){ dateJoined=newDateJoined; }
     public void setLastLogin(Date newLastLogin){ lastLogin=newLastLogin; }
     public void setAuthoriseDate(java.sql.Date newAuthoriseDate){ authoriseDate=newAuthoriseDate; }
-    public void setEndAuthorise(java.sql.Date newEndAuthorise){ endAuthorise=newEndAuthorise; }
 
+    public void setEndAuthorise(java.sql.Date newEndAuthorise){ endAuthorise=newEndAuthorise; }
 }

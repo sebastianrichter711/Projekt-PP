@@ -64,6 +64,8 @@ public class UserService {
         if(user.isEmpty())
             throw new IdNotFoundInDatabaseException("User of id " + id + " not found");
 
+        updatedUser.setPassword(this.passwordEncoder.encode(updatedUser.getPassword()));
+
         try {
             return userRepository.save(updatedUser);
         } catch (RuntimeException e) {

@@ -1,23 +1,26 @@
 package pl.polsl.pp.backapp.post;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import pl.polsl.pp.backapp.auth.UserPrincipal;
 import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
-import pl.polsl.pp.backapp.topic.Topic;
-import pl.polsl.pp.backapp.topic.TopicRepository;
+import pl.polsl.pp.backapp.user.User;
+import pl.polsl.pp.backapp.user.UserRepository;
 
 import java.util.Date;
-import java.util.Optional;
 
 
 @Service
 public class PostService {
 
     private PostRepository postRepository;
+    private UserRepository userRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public Iterable<Post> getPosts() {
@@ -32,22 +35,36 @@ public class PostService {
     }
 
     public Post addPost(Post post) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByLogin(userPrincipal.getUsername());
+
         post.setCreateDate(new Date());
+        post.setLastChange(new Date());
+        post.setAuthor(user);
+
+        user.incPostsNumber();
+        userRepository.save(user);
         return postRepository.save(post);
     }
 
     public Post updatePost(String id, Post updatedPost) {
-        Optional<Post> post = postRepository.findById(id);
+        Post post = postRepository.findById(id).
+                orElseThrow(() -> new IdNotFoundInDatabaseException("Post of id " + id + " not found"));
 
-        if(post.isEmpty())
-            throw new IdNotFoundInDatabaseException("Post of id " + id + " not found");
+        post.setLastChange(new Date());
+        post.setText(updatedPost.getText());
 
-        updatedPost.setLastChange(new Date());
-        return postRepository.save(updatedPost);
+        return postRepository.save(post);
     }
 
     public void deletePost(String id) {
         try {
+            UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userRepository.findByLogin(userPrincipal.getUsername());
+
+            user.decPostsNumber();
+            userRepository.save(user);
+
             postRepository.deleteById(id);
         } catch (IdNotFoundInDatabaseException e) {
             System.out.println(e.getMessage());

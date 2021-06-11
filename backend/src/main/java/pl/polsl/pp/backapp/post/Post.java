@@ -16,11 +16,11 @@ public class Post {
     private Date lastChange;
     private String text;
 
-    public Post(User author, Date createDate, Date lastChange, String text){
+    public Post(User author, Date createDate, Date lastChange, String text) {
         this.author = author;
         this.createDate = createDate;
         this.lastChange = lastChange;
-        this.text=text;
+        this.text = text;
     }
 
     public String getId() {return id;}
