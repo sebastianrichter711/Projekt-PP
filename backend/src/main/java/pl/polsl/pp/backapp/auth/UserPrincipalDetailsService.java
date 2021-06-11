@@ -8,7 +8,6 @@ import pl.polsl.pp.backapp.user.User;
 import pl.polsl.pp.backapp.user.UserRepository;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 @Service
 public class UserPrincipalDetailsService implements UserDetailsService {
@@ -21,7 +20,7 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = this.userRepo.findByLogin(s);
+        User user = this.userRepo.findByLogin(s).orElseThrow(() -> new UsernameNotFoundException("Username " + s + " not found"));
         user.setLastLogin(new Date());
         userRepo.save(user);
         return new UserPrincipal(user);

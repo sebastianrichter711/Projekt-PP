@@ -36,7 +36,9 @@ public class TopicService {
 
     public Topic addTopic(Topic topic) {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findByLogin(userPrincipal.getUsername());
+        User user = userRepository.findByLogin(userPrincipal.getUsername()).
+                orElseThrow(() -> new IdNotFoundInDatabaseException("Can't find currently logged in user " +
+                        userPrincipal.getUsername() + " in database!"));
 
         topic.setCreateDate(new Date());
         topic.setLastChange(new Date());
@@ -61,7 +63,9 @@ public class TopicService {
     public void deleteTopic(String id) {
         try {
             UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = userRepository.findByLogin(userPrincipal.getUsername());
+            User user = userRepository.findByLogin(userPrincipal.getUsername()).
+                    orElseThrow(() -> new IdNotFoundInDatabaseException("Can't find currently logged in user " +
+                        userPrincipal.getUsername() + " in database!"));
 
             user.decPostsNumber();
             userRepository.save(user);

@@ -36,7 +36,9 @@ public class PostService {
 
     public Post addPost(Post post) {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findByLogin(userPrincipal.getUsername());
+        User user = userRepository.findByLogin(userPrincipal.getUsername())
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Can't find currently logged in user " +
+                        userPrincipal.getUsername() + " in database!"));
 
         post.setCreateDate(new Date());
         post.setLastChange(new Date());
@@ -60,7 +62,9 @@ public class PostService {
     public void deletePost(String id) {
         try {
             UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = userRepository.findByLogin(userPrincipal.getUsername());
+            User user = userRepository.findByLogin(userPrincipal.getUsername())
+                    .orElseThrow(() -> new IdNotFoundInDatabaseException("Can't find currently logged in user " +
+                        userPrincipal.getUsername() + " in database!"));;
 
             user.decPostsNumber();
             userRepository.save(user);

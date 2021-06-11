@@ -57,21 +57,36 @@ public class UserService {
     }
 
     public User updateUser(String id, User updatedUser) {
-        if(!this.validateMail(updatedUser.getEmail()))
-            throw new IllegalArgumentException("Invalid mail format");
-        Optional<User> user = userRepository.findById(id);
 
-        if(user.isEmpty())
-            throw new IdNotFoundInDatabaseException("User of id " + id + " not found");
+        User user = userRepository.findById(id).
+                orElseThrow(() -> new IdNotFoundInDatabaseException("User of id " + id + " not found"));
 
-        updatedUser.setPassword(this.passwordEncoder.encode(updatedUser.getPassword()));
+        if (updatedUser.getEmail() != null) {
+            if(!this.validateMail(updatedUser.getEmail()))
+                throw new IllegalArgumentException("Invalid mail format");
 
-        try {
-            return userRepository.save(updatedUser);
-        } catch (RuntimeException e) {
-            // TODO make email unique
-            throw new ItemExistsInDatabaseException("User with email ( " + updatedUser.getEmail() + ") exists in DB");
+            User desiredEmail = userRepository.findByEmail(updatedUser.getEmail()).
+                    orElseThrow(() -> new ItemExistsInDatabaseException("User with email ( " + updatedUser.getEmail() + ") exists in DB"));
+
+            user.setEmail(updatedUser.getEmail());
+
+            userRepository.save(user);
         }
+
+        if (updatedUser.getPassword() != null) {
+            user.setPassword(this.passwordEncoder.encode(updatedUser.getPassword()));
+            userRepository.save(user);
+        }
+
+        if (updatedUser.getLogin() != null) {
+            User desiredLogin = userRepository.findByLogin(updatedUser.getLogin()).
+                    orElseThrow(() -> new ItemExistsInDatabaseException("User with login ( " + updatedUser.getLogin() + ") exists in DB"));
+
+            user.setLogin(updatedUser.getLogin());
+            userRepository.save(user);
+        }
+
+        return user;
     }
 
     public void deleteUser(String id) {
