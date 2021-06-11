@@ -4,10 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
-import pl.polsl.pp.backapp.topic.Topic;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -31,19 +27,21 @@ public class SectionService {
     }
 
     public Section addSection(Section section) {
+        section.setTopicsNumber(0);
         return sectionRepository.save(section);
     }
 
     public Section updateSection(String id, Section updatedSection) {
-        Optional<Section> section = sectionRepository.findById(id);
+        Section section = sectionRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundInDatabaseException("Section of id " + id + " not found"));
 
-        if(section.isEmpty())
-            throw new IdNotFoundInDatabaseException("Section of id " + id + " not found");
+        section.setModerator(updatedSection.getModerator());    // TODO change to moderator ID
+        section.setName(updatedSection.getName());
 
-        return sectionRepository.save(updatedSection);
+        return sectionRepository.save(section);
     }
 
-    public void deleteTopic(String id) {
+    public void deleteSection(String id) {
         try {
             sectionRepository.deleteById(id);
         } catch (IdNotFoundInDatabaseException e) {

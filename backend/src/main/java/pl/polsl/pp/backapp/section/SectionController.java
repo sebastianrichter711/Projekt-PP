@@ -65,7 +65,7 @@ public class SectionController {
     @DeleteMapping("/section/{id}")
     public void deleteSection(@PathVariable String id) {
         try {
-            sectionService.deleteTopic(id);
+            sectionService.deleteSection(id);
         } catch (IdNotFoundInDatabaseException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
