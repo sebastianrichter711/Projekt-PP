@@ -12,7 +12,9 @@
 //import pl.polsl.pp.backapp.user.User;
 //
 //import java.time.LocalDate;
+//import java.util.ArrayList;
 //import java.util.Date;
+//import java.util.List;
 //
 //@Component
 //public class DbSeeder implements CommandLineRunner {
@@ -41,12 +43,18 @@
 //        User wisnia = new User("wisnia123@onet.pl", "michalwisnia", "$2y$12$lQxZDTOPNkj/CtzQJtnbE.liaOatvaaGtmv1GpQpsWhQPn/3rt6eq", "USER",
 //                "active", 0, new Date(), null);
 //
+//
 //        userRepo.save(kowalski);
 //        userRepo.save(nowak);
 //        userRepo.save(wisnia);
 //
 //        Post javaPost1 = new Post(nowak, new Date(), new Date(), "Zrob restart");
 //        Post javaPost2 = new Post(kowalski, new Date(), new Date(), "Nie dziala dalej");
+//
+//        List<Post> posts = new ArrayList<>();
+//        posts.add(javaPost1);
+//        posts.add(javaPost2);
+//
 //
 //        Post dotNet1 = new Post(kowalski, new Date(), new Date(), "...");
 //        Post dotNet2 = new Post(wisnia, new Date(), new Date(), "...");
@@ -59,7 +67,7 @@
 //        postRepo.save(dotNet3);
 //
 //        Topic topicJava = new Topic("Spring boot problem", kowalski, new Date(), java.sql.Date.valueOf(LocalDate.now()),
-//                "Siema, mam problem ze spring bootem", null);
+//                "Siema, mam problem ze spring bootem", posts);
 //        Topic topicDotNet = new Topic("Dot net problem", wisnia, new Date(), java.sql.Date.valueOf(LocalDate.now()),
 //                "Nie dziala mi dot net :(", null);
 //

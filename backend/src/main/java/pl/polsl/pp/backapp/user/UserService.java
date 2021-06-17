@@ -1,7 +1,6 @@
 package pl.polsl.pp.backapp.user;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,9 +8,7 @@ import pl.polsl.pp.backapp.auth.RegisterForm;
 import pl.polsl.pp.backapp.exception.IdNotFoundInDatabaseException;
 import pl.polsl.pp.backapp.exception.ItemExistsInDatabaseException;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 
@@ -45,7 +42,7 @@ public class UserService {
 
         // TODO change roles, status to enum maybe
         User user = new User(registerForm.getEmail(), registerForm.getUsername(), hash, "USER",
-                "active", 0, new Date(), null);
+                true, 0, new Date(), null);
 
         try {
             return userRepository.save(user);

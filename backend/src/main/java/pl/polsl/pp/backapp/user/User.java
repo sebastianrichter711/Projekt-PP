@@ -3,9 +3,9 @@ package pl.polsl.pp.backapp.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mongodb.lang.Nullable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Document(collection="users")
@@ -13,12 +13,14 @@ public class User {
 
     @Id
     private String id;
+    @Indexed(unique=true)
     private String email;
+    @Indexed(unique=true)
     private String login;
     @JsonIgnore
     private String password;
     private String role;
-    private String status;
+    private Boolean status;
     private Integer postsNumber;
     private Date dateJoined;
     private Date lastLogin;
@@ -27,7 +29,7 @@ public class User {
     @Nullable
     private java.sql.Date endAuthorise;
 
-    public User(String email, String login, String password, String role, String status, Integer postsNumber, Date dateJoined,
+    public User(String email, String login, String password, String role, Boolean status, Integer postsNumber, Date dateJoined,
                 Date lastLogin) {
         this.email=email;
         this.login=login;
@@ -44,7 +46,7 @@ public class User {
     public String getLogin() { return login; }
     public String getPassword() { return password; }
     public String getRole() { return role; }
-    public String getStatus() { return status; }
+    public Boolean getStatus() { return status; }
     public Integer getPostsNumber() { return postsNumber; }
     public Date getDateJoined() { return dateJoined; }
     public Date getLastLogin() { return lastLogin; }
@@ -56,13 +58,12 @@ public class User {
     public void setLogin(String newLogin) {login=newLogin;}
     public void setPassword(String newPassword) { password=newPassword; }
     public void setRole(String newRole){ role=newRole; }
-    public void setStatus(String newStatus) { status=newStatus; }
+    public void setStatus(Boolean newStatus) { status=newStatus; }
     public void setPostsNumber(Integer newPostsNumber){ postsNumber=newPostsNumber; }
     public void incPostsNumber(){ postsNumber += 1; }
     public void decPostsNumber() { postsNumber -= 1; }
     public void setDateJoined(Date newDateJoined){ dateJoined=newDateJoined; }
     public void setLastLogin(Date newLastLogin){ lastLogin=newLastLogin; }
     public void setAuthoriseDate(java.sql.Date newAuthoriseDate){ authoriseDate=newAuthoriseDate; }
-
     public void setEndAuthorise(java.sql.Date newEndAuthorise){ endAuthorise=newEndAuthorise; }
 }
