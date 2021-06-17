@@ -1,7 +1,8 @@
 import './App.css'
 import React, { useState } from 'react'
-import Sidebar from './components/sidebar'
-import Sections from './components/sections'
+import RegisterForm from './components/RegisterForm'
+import Sidebar from './components/Sidebar'
+import Sections from './components/Sections'
 
 function App() {
   const PageEnum = Object.freeze({
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <div id="app">
-      <Sidebar />
+      <Sidebar page={page} setPage={setPage} PageEnum={PageEnum} />
       <div className="container">
         {        
           (() => {
@@ -24,7 +25,7 @@ function App() {
               case PageEnum.home:
                 return <Sections />
               case PageEnum.register:
-                return
+                return <RegisterForm />
               case PageEnum.section:
                 return
               case PageEnum.thread:
