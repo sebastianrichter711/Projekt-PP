@@ -2,7 +2,9 @@ import React from 'react'
 
 function Sections() {
     return (
-        <div className="sections">Hello world</div>
+        <div className="sections">
+            Hello world
+        </div>
     )
 }
 
